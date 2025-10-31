@@ -1,0 +1,12 @@
+---
+- name: Configurar DNS Primario
+  hosts: dns_primary
+  become: yes
+  roles:
+    - dns-primary
+
+- name: Configurar DNS Secundario
+  hosts: dns_secondary
+  become: yes
+  roles:
+    - dns-secondary

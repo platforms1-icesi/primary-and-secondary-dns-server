@@ -1,0 +1,11 @@
+include "/etc/bind/tsig.key";
+
+zone "plataformas.local" {
+    type master;
+    file "/etc/bind/zones/db.plataformas.local.signed";
+    allow-transfer { 
+        key transfer-key;
+        192.168.20.11;
+    };
+    also-notify { 192.168.20.11; };
+};

@@ -1,0 +1,130 @@
+---
+- name: Instalar BIND9
+  apt:
+    name:
+      - bind9
+      - bind9utils
+      - bind9-doc
+    state: present
+    update_cache: yes
+
+- name: Crear directorio de zonas
+  file:
+    path: /etc/bind/zones
+    state: directory
+    owner: bind
+    group: bind
+    mode: '0755'
+
+- name: Copiar clave TSIG
+  template:
+    src: ../../templates/tsig.key.j2
+    dest: /etc/bind/tsig.key
+    owner: bind
+    group: bind
+    mode: '0640'
+
+- name: Configurar named.conf.options
+  template:
+    src: named.conf.options.j2
+    dest: /etc/bind/named.conf.options
+    owner: bind
+    group: bind
+    mode: '0644'
+  notify: restart bind9
+
+- name: Configurar named.conf.local
+  template:
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+    owner: bind
+    group: bind
+    mode: '0644'
+  notify: restart bind9
+
+- name: Crear zona plataformas.local
+  template:
+    src: db.plataformas.local.j2
+    dest: /etc/bind/zones/db.plataformas.local
+    owner: bind
+    group: bind
+    mode: '0644'
+
+- name: Verificar sintaxis de zona
+  command: named-checkzone plataformas.local /etc/bind/zones/db.plataformas.local
+  register: zone_check
+  changed_when: false
+
+- name: Limpiar claves DNSSEC antiguas
+  shell: rm -f /etc/bind/zones/Kplataformas.local.* /etc/bind/zones/dsset-* /etc/bind/zones/*.signed
+  args:
+    warn: false
+
+- name: Generar clave ZSK
+  shell: cd /etc/bind/zones && dnssec-keygen -a RSASHA256 -b 2048 -n ZONE plataformas.local
+  register: zsk_output
+
+- name: Generar clave KSK  
+  shell: cd /etc/bind/zones && dnssec-keygen -a RSASHA256 -b 4096 -f KSK -n ZONE plataformas.local
+  register: ksk_output
+
+- name: Mostrar claves generadas
+  debug:
+    msg:
+      - "ZSK: {{ zsk_output.stdout }}"
+      - "KSK: {{ ksk_output.stdout }}"
+
+- name: Incluir claves públicas en zona
+  shell: |
+    cd /etc/bind/zones
+    for key in Kplataformas.local.*.key; do
+      echo "\$INCLUDE $key" >> db.plataformas.local
+    done
+  args:
+    warn: false
+
+- name: Ajustar permisos antes de firmar
+  file:
+    path: /etc/bind/zones
+    owner: bind
+    group: bind
+    recurse: yes
+
+- name: Firmar zona especificando archivos de claves
+  shell: |
+    cd /etc/bind/zones
+    dnssec-signzone -o plataformas.local db.plataformas.local \
+      {{ zsk_output.stdout }}.key {{ ksk_output.stdout }}.key
+  register: sign_result
+
+- name: Mostrar resultado de firma
+  debug:
+    var: sign_result.stdout_lines
+
+- name: Verificar archivo firmado creado
+  stat:
+    path: /etc/bind/zones/db.plataformas.local.signed
+  register: signed_file
+
+- name: Fallar si no se creó archivo firmado
+  fail:
+    msg: "No se generó el archivo firmado"
+  when: not signed_file.stat.exists
+
+- name: Ajustar permisos finales
+  file:
+    path: /etc/bind/zones
+    owner: bind
+    group: bind
+    recurse: yes
+
+- name: Iniciar y habilitar BIND9
+  systemd:
+    name: bind9
+    state: started
+    enabled: yes
+
+- name: Recargar BIND9
+  systemd:
+    name: bind9
+    state: reloaded
