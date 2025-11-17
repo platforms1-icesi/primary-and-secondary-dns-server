@@ -118,6 +118,20 @@
     group: bind
     recurse: yes
 
+- name: Permitir tráfico DNS (UDP)
+  ufw:
+    rule: allow
+    port: '53'
+    proto: udp
+    comment: 'Allow DNS queries'
+
+- name: Permitir tráfico DNS (TCP)
+  ufw:
+    rule: allow
+    port: '53'
+    proto: tcp
+    comment: 'Allow DNS queries'
+
 - name: Iniciar y habilitar BIND9
   systemd:
     name: bind9
