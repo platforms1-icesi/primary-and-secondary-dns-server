@@ -57,8 +57,6 @@
 
 - name: Limpiar claves DNSSEC antiguas
   shell: rm -f /etc/bind/zones/Kplataformas.local.* /etc/bind/zones/dsset-* /etc/bind/zones/*.signed
-  args:
-    warn: false
 
 - name: Generar clave ZSK
   shell: cd /etc/bind/zones && dnssec-keygen -a RSASHA256 -b 2048 -n ZONE plataformas.local
@@ -80,8 +78,6 @@
     for key in Kplataformas.local.*.key; do
       echo "\$INCLUDE $key" >> db.plataformas.local
     done
-  args:
-    warn: false
 
 - name: Ajustar permisos antes de firmar
   file:
