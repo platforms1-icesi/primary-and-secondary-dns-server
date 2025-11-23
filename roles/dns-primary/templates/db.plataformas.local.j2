@@ -20,25 +20,3 @@ smtp    IN      A       192.168.20.20
 dhcp    IN      A       192.168.20.50
 www     IN      A       192.168.20.2
 mail    IN      A       192.168.20.20
-$TTL    604800
-@       IN      SOA     ns1.plataformas.local. admin.plataformas.local. (
-                              2025103001   ; Serial
-                              3600         ; Refresh
-                              1800         ; Retry
-                              604800       ; Expire
-                              86400 )      ; Negative Cache TTL
-
-; Name servers
-@       IN      NS      ns1.plataformas.local.
-@       IN      NS      ns2.plataformas.local.
-
-; A records
-ns1     IN      A       192.168.20.10
-ns2     IN      A       192.168.20.11
-router  IN      A       192.168.10.2
-srv1    IN      A       192.168.20.2
-srv2    IN      A       192.168.20.3
-smtp    IN      A       192.168.20.20
-dhcp    IN      A       192.168.20.50
-www     IN      A       192.168.20.2
-mail    IN      A       192.168.20.20
