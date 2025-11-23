@@ -7,6 +7,18 @@
     state: present
     update_cache: yes
 
+- name: Configurar IPv6 estática en Netplan
+  template:
+    src: netplan.yaml.j2
+    dest: /etc/netplan/50-vagrant.yaml
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Aplicar configuración de red
+  command: netplan apply
+  changed_when: false
+
 - name: Crear directorio de zonas
   file:
     path: /etc/bind/zones

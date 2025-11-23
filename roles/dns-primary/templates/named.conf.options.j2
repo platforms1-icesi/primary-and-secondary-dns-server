@@ -1,17 +1,24 @@
 options {
     directory "/var/cache/bind";
-    
+
     listen-on { 127.0.0.1; 192.168.20.10; };
-    listen-on-v6 { none; };
-    
-    allow-query { 192.168.0.0/16; 127.0.0.1; };
+    listen-on-v6 { ::1; 2001:DB8:20::10; };
+
+    allow-query { 192.168.0.0/16; 127.0.0.1; 2001:DB8::/32; };
     allow-transfer { none; };
-    
+
     recursion yes;
     dnssec-validation auto;
-    
+
     forwarders {
         8.8.8.8;
         8.8.4.4;
+    };
+
+    // DNS64 configuration - must match NAT64 prefix
+    dns64 2001:DB8:64::/96 {
+        clients { any; };
+        mapped { !2001:DB8::/32; any; };
+        exclude { ::ffff:0000:0000/96; };
     };
 };
