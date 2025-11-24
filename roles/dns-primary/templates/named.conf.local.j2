@@ -2,7 +2,7 @@ include "/etc/bind/tsig.key";
 
 zone "plataformas.local" {
     type master;
-    file "/etc/bind/zones/db.plataformas.local.signed";
+    file "/etc/bind/zones/db.plataformas.local";
     allow-transfer {
         key transfer-key;
         192.168.20.11;
@@ -13,7 +13,7 @@ zone "plataformas.local" {
 // Reverse zone for IPv4 network 192.168.10.0/24
 zone "10.168.192.in-addr.arpa" {
     type master;
-    file "/etc/bind/zones/db.192.168.10.signed";
+    file "/etc/bind/zones/db.192.168.10";
     allow-transfer {
         key transfer-key;
         192.168.20.11;
@@ -24,7 +24,7 @@ zone "10.168.192.in-addr.arpa" {
 // Reverse zone for IPv4 network 192.168.20.0/24
 zone "20.168.192.in-addr.arpa" {
     type master;
-    file "/etc/bind/zones/db.192.168.20.signed";
+    file "/etc/bind/zones/db.192.168.20";
     allow-transfer {
         key transfer-key;
         192.168.20.11;
@@ -35,7 +35,7 @@ zone "20.168.192.in-addr.arpa" {
 // Reverse zone for IPv6 network 2001:DB8:10::/64
 zone "0.1.0.0.8.b.d.0.1.0.0.2.ip6.arpa" {
     type master;
-    file "/etc/bind/zones/db.2001.db8.0010.ip6.arpa.signed";
+    file "/etc/bind/zones/db.2001.db8.0010.ip6.arpa";
     allow-transfer {
         key transfer-key;
         192.168.20.11;
@@ -46,7 +46,7 @@ zone "0.1.0.0.8.b.d.0.1.0.0.2.ip6.arpa" {
 // Reverse zone for IPv6 network 2001:DB8:20::/64
 zone "0.2.0.0.8.b.d.0.1.0.0.2.ip6.arpa" {
     type master;
-    file "/etc/bind/zones/db.2001.db8.0020.ip6.arpa.signed";
+    file "/etc/bind/zones/db.2001.db8.0020.ip6.arpa";
     allow-transfer {
         key transfer-key;
         192.168.20.11;
@@ -57,7 +57,7 @@ zone "0.2.0.0.8.b.d.0.1.0.0.2.ip6.arpa" {
 // Reverse zone for DNS64 prefix 2001:DB8:64::/96
 zone "4.6.0.0.8.b.d.0.1.0.0.2.ip6.arpa" {
     type master;
-    file "/etc/bind/zones/db.2001.db8.0064.ip6.arpa.signed";
+    file "/etc/bind/zones/db.2001.db8.0064.ip6.arpa";
     allow-transfer {
         key transfer-key;
         192.168.20.11;
