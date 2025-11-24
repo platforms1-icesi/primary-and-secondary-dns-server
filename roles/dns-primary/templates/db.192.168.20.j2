@@ -1,0 +1,18 @@
+$TTL    604800
+@       IN      SOA     ns1.plataformas.local. admin.plataformas.local. (
+                              2025103001   ; Serial
+                              3600         ; Refresh
+                              1800         ; Retry
+                              604800       ; Expire
+                              86400 )      ; Negative Cache TTL
+
+; Name servers
+@       IN      NS      ns1.plataformas.local.
+@       IN      NS      ns2.plataformas.local.
+
+; PTR records for 192.168.20.0/24
+10      IN      PTR     ns1.plataformas.local.
+11      IN      PTR     ns2.plataformas.local.
+2       IN      PTR     srv1.plataformas.local.
+3       IN      PTR     srv2.plataformas.local.
+20      IN      PTR     smtp.plataformas.local.

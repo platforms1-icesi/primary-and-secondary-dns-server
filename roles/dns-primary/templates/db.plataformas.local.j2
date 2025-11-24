@@ -17,6 +17,15 @@ router  IN      A       192.168.10.2
 srv1    IN      A       192.168.20.2
 srv2    IN      A       192.168.20.3
 smtp    IN      A       192.168.20.20
-dhcp    IN      A       192.168.20.50
 www     IN      A       192.168.20.2
 mail    IN      A       192.168.20.20
+
+; AAAA records (IPv6)
+ns1     IN      AAAA    2001:DB8:20::10
+ns2     IN      AAAA    2001:DB8:20::11
+router  IN      AAAA    2001:DB8:10::2
+srv1    IN      AAAA    2001:DB8:20::2
+srv2    IN      AAAA    2001:DB8:20::3
+smtp    IN      AAAA    2001:DB8:20::20
+www     IN      AAAA    2001:DB8:20::2
+mail    IN      AAAA    2001:DB8:20::20

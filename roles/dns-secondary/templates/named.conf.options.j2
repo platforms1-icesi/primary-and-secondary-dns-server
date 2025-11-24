@@ -20,5 +20,6 @@ options {
         clients { any; };
         mapped { !2001:DB8::/32; any; };
         exclude { ::ffff:0000:0000/96; };
+        break-dnssec yes;
     };
 };
