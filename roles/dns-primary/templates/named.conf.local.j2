@@ -32,6 +32,17 @@ zone "20.168.192.in-addr.arpa" {
     also-notify { 192.168.20.11; };
 };
 
+// Reverse zone for IPv6 network 2001:DB8:10::/64
+zone "0.1.0.0.8.b.d.0.1.0.0.2.ip6.arpa" {
+    type master;
+    file "/etc/bind/zones/db.2001.db8.0010.ip6.arpa.signed";
+    allow-transfer {
+        key transfer-key;
+        192.168.20.11;
+    };
+    also-notify { 192.168.20.11; };
+};
+
 // Reverse zone for IPv6 network 2001:DB8:20::/64
 zone "0.2.0.0.8.b.d.0.1.0.0.2.ip6.arpa" {
     type master;
