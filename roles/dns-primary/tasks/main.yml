@@ -118,17 +118,17 @@
   changed_when: false
 
 - name: Verificar sintaxis de zona inversa IPv6 2001:DB8:10::/64
-  command: named-checkzone 0.1.0.0.8.b.d.0.1.0.0.2.ip6.arpa /etc/bind/zones/db.2001.db8.0010.ip6.arpa
+  command: named-checkzone 0.0.0.0.0.1.0.0.8.b.d.0.1.0.0.2.ip6.arpa /etc/bind/zones/db.2001.db8.0010.ip6.arpa
   register: zone_check_ipv6_10
   changed_when: false
 
 - name: Verificar sintaxis de zona inversa IPv6 2001:DB8:20::/64
-  command: named-checkzone 0.2.0.0.8.b.d.0.1.0.0.2.ip6.arpa /etc/bind/zones/db.2001.db8.0020.ip6.arpa
+  command: named-checkzone 0.0.0.0.0.2.0.0.8.b.d.0.1.0.0.2.ip6.arpa /etc/bind/zones/db.2001.db8.0020.ip6.arpa
   register: zone_check_ipv6_20
   changed_when: false
 
 - name: Verificar sintaxis de zona inversa IPv6 DNS64
-  command: named-checkzone 4.6.0.0.8.b.d.0.1.0.0.2.ip6.arpa /etc/bind/zones/db.2001.db8.0064.ip6.arpa
+  command: named-checkzone 0.0.0.0.4.6.0.0.8.b.d.0.1.0.0.2.ip6.arpa /etc/bind/zones/db.2001.db8.0064.ip6.arpa
   register: zone_check_ipv6_64
   changed_when: false
 
