@@ -11,6 +11,7 @@ $TTL    604800
 @       IN      NS      ns2.plataformas.local.
 
 ; PTR records for 2001:DB8:10::/64
-; Format: last nibbles in reverse order
-; 2001:DB8:10::2 (router)
-2.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0     IN      PTR     router.plataformas.local.
+; Format: last 16 nibbles in reverse order (host part only, /64)
+; 2001:DB8:10::2 = 0000:0000:0000:0002 (last 64 bits)
+; Reversed: 2.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0
+2.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0     IN      PTR     router.plataformas.local.
