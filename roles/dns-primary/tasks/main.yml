@@ -168,42 +168,42 @@
   shell: |
     cd /etc/bind/zones
     dnssec-signzone -A -3 $(head -c 1000 /dev/random | sha1sum | cut -b 1-16) \
-      -N INCREMENT -o plataformas.local -t db.plataformas.local
+      -N INCREMENT -o plataformas.local -K /etc/bind/zones db.plataformas.local
   register: sign_result_main
 
 - name: Firmar zona inversa 192.168.10.0/24
   shell: |
     cd /etc/bind/zones
     dnssec-signzone -A -3 $(head -c 1000 /dev/random | sha1sum | cut -b 1-16) \
-      -N INCREMENT -o 10.168.192.in-addr.arpa -t db.192.168.10
+      -N INCREMENT -o 10.168.192.in-addr.arpa -K /etc/bind/zones db.192.168.10
   register: sign_result_10
 
 - name: Firmar zona inversa 192.168.20.0/24
   shell: |
     cd /etc/bind/zones
     dnssec-signzone -A -3 $(head -c 1000 /dev/random | sha1sum | cut -b 1-16) \
-      -N INCREMENT -o 20.168.192.in-addr.arpa -t db.192.168.20
+      -N INCREMENT -o 20.168.192.in-addr.arpa -K /etc/bind/zones db.192.168.20
   register: sign_result_20
 
 - name: Firmar zona inversa IPv6 2001:DB8:10::/64
   shell: |
     cd /etc/bind/zones
     dnssec-signzone -A -3 $(head -c 1000 /dev/random | sha1sum | cut -b 1-16) \
-      -N INCREMENT -o 0.1.0.0.8.b.d.0.1.0.0.2.ip6.arpa -t db.2001.db8.0010.ip6.arpa
+      -N INCREMENT -o 0.1.0.0.8.b.d.0.1.0.0.2.ip6.arpa -K /etc/bind/zones db.2001.db8.0010.ip6.arpa
   register: sign_result_ipv6_10
 
 - name: Firmar zona inversa IPv6 2001:DB8:20::/64
   shell: |
     cd /etc/bind/zones
     dnssec-signzone -A -3 $(head -c 1000 /dev/random | sha1sum | cut -b 1-16) \
-      -N INCREMENT -o 0.2.0.0.8.b.d.0.1.0.0.2.ip6.arpa -t db.2001.db8.0020.ip6.arpa
+      -N INCREMENT -o 0.2.0.0.8.b.d.0.1.0.0.2.ip6.arpa -K /etc/bind/zones db.2001.db8.0020.ip6.arpa
   register: sign_result_ipv6_20
 
 - name: Firmar zona inversa IPv6 DNS64 2001:DB8:64::/96
   shell: |
     cd /etc/bind/zones
     dnssec-signzone -A -3 $(head -c 1000 /dev/random | sha1sum | cut -b 1-16) \
-      -N INCREMENT -o 4.6.0.0.8.b.d.0.1.0.0.2.ip6.arpa -t db.2001.db8.0064.ip6.arpa
+      -N INCREMENT -o 4.6.0.0.8.b.d.0.1.0.0.2.ip6.arpa -K /etc/bind/zones db.2001.db8.0064.ip6.arpa
   register: sign_result_ipv6_64
 
 - name: Verificar archivos firmados creados
