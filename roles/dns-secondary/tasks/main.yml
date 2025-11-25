@@ -21,7 +21,7 @@
 
 - name: Crear directorio de zonas
   file:
-    path: /etc/bind/zones
+    path: /var/cache/bind/zones
     state: directory
     owner: bind
     group: bind
